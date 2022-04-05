@@ -1,0 +1,31 @@
+{
+  "name": "todos",
+  "version": "1.0.0",
+  "description": "Todo app",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/adamjedlicka/node-todos.git"
+  },
+  "author": "Adam Jedlička <mail@adamjedlicka.cz>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/adamjedlicka/node-todos/issues"
+  },
+  "homepage": "https://github.com/adamjedlicka/node-todos#readme",
+  "dependencies": {
+    "@vscode/sqlite3": "^5.0.8",
+    "ejs": "^3.1.6",
+    "express": "^4.17.3",
+    "knex": "^1.0.5"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.15"
+  }
+}

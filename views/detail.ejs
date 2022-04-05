@@ -1,0 +1,29 @@
+<html>
+    <head>
+        <title><%= title %></title>
+    </head>
+    <body>
+        <h1><%= todo.text %></h1>
+        <table>
+            <tr>
+              <th>Hotovo</th>
+              <th>Akce</th>
+            </tr>
+            <tr>
+              <td><%= todo.done ? 'ano' : 'ne' %></td>
+              <td>
+                <% if (todo.done) { %>
+                <a href="/toggle/<%= todo.id %>">Nehotovo</a>
+                <a href="/delete/<%= todo.id %>">Odstranit</a>
+                <% } else { %>
+                <a href="/toggle/<%= todo.id %>">Hotovo</a>
+                <% } %>
+              </td>
+            </tr>
+          </table>
+          <form action="/edit/<%= todo.id %>" method="post">
+            <input value="<%= todo.text %>" type="text" name="text" />
+            <button type="submit">Upravit</button>
+          </form>
+    </body>
+</html>

@@ -4,9 +4,8 @@ import knexfile from './knexfile.js'
 
 const port = 3000
 
-
-const app = express();
-const db = knex(knexfile);
+const app = express()
+const db = knex(knexfile)
 
 app.set('view engine', 'ejs')
 
@@ -25,7 +24,9 @@ app.get('/', async (req, res) => {
 app.post('/add', async (req, res) => {
   const text = String(req.body.text)
 
-  await db('todos').insert({ text })
+  await db('todos').insert({
+    text,
+  })
 
   res.redirect('/')
 })
@@ -41,29 +42,6 @@ app.get('/toggle/:id', async (req, res, next) => {
 
   res.redirect('back')
 })
-app.post('/edit/:id', async (req, res, next) => {
-  const id = Number(req.params.id)
-  const text = String(req.body.text)
-  const todo = await db('todos').select('*').where('id', id).first();
-  console.log(text, todo)
-
-  if (!todo) return next()
-
-  await db('todos').update({ text: text }).where('id', id)
-  res.redirect('/')
-})
-app.get('/detail/:id', async (req, res, next) => {
-  const id = Number(req.params.id)
-
-  const todo = await db('todos').select('*').where('id', id).first()
-
-  if (!todo) return next()
-
-  res.render('detail', {
-    title: `Detail - ${todo.text}`,
-    todo,
-  })
-})
 
 app.get('/delete/:id', async (req, res, next) => {
   const id = Number(req.params.id)
@@ -75,6 +53,37 @@ app.get('/delete/:id', async (req, res, next) => {
   await db('todos').delete().where('id', id)
 
   res.redirect('/')
+})
+
+app.get('/detail/:id', async (req, res, next) => {
+  const id = Number(req.params.id)
+
+  const todo = await db('todos').select('*').where('id', id).first()
+
+  if (!todo) return next()
+
+  res.render('detail', {
+    todo,
+  })
+})
+
+app.post('/edit/:id', async (req, res, next) => {
+  const id = Number(req.params.id)
+  const text = String(req.body.text)
+
+  const todo = await db('todos').select('*').where('id', id).first()
+
+  if (!todo) return next()
+
+  await db('todos').update({ text }).where('id', id)
+
+  res.redirect('back')
+})
+
+app.use((req, res) => {
+  console.log('404', req.method, req.url)
+
+  res.render('404')
 })
 
 app.listen(port, () => {

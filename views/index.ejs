@@ -1,41 +1,52 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title><%= title %></title>
-  </head>
-  <body>
-    <h1><%= title %></h1>
 
-    <table>
-      <tr>
-        <th>Text</th>
-        <th>Hotovo</th>
-        <th>Akce</th>
-      </tr>
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title><%= title %></title>
+</head>
 
-      <% for (const todo of todos) { %>
-      <tr>
-        <td><%= todo.text %></td>
-        <td><%= todo.done ? 'ano' : 'ne' %></td>
-        <td>
-          <a href="/detail/<%= todo.id %>">Detail</a>
-          <% if (todo.done) { %>
-          <a href="/toggle/<%= todo.id %>">Nehotovo</a>
-          <a href="/delete/<%= todo.id %>">Odstranit</a>
-          <% } else { %>
-          <a href="/toggle/<%= todo.id %>">Hotovo</a>
-          <% } %>
-        </td>
-      </tr>
-      <% } %>
-    </table>
+<body>
+  <h1><%= title %></h1>
+  <a href="/?filter=all">Vsechny</a>
+  <a href="/?filter=done">Hotove</a>
+  <a href="/?filter=pending">Nehotove</a>
+  <form method="get">
+    <input name="search" />
+    <button type="submit">Filtrovat</button>
+  </form>
+  <br />
+  <br />
+  <table>
+    <tr>
+      <th>Text</th>
+      <th>Hotovo</th>
+      <th>Akce</th>
+    </tr>
 
-    <form action="/add" method="post">
-      <input type="text" name="text" />
-      <button type="submit">Přidat ToDo!</button>
-    </form>
-  </body>
+    <% for (const todo of todos) { %>
+    <tr>
+      <td><%= todo.text %></td>
+      <td><%= todo.done ? 'ano' : 'ne' %></td>
+      <td>
+        <a href="/detail/<%= todo.id %>">Detail</a>
+        <% if (todo.done) { %>
+        <a href="/toggle/<%= todo.id %>">Nehotovo</a>
+        <a href="/delete/<%= todo.id %>">Odstranit</a>
+        <% } else { %>
+        <a href="/toggle/<%= todo.id %>">Hotovo</a>
+        <% } %>
+      </td>
+    </tr>
+    <% } %>
+  </table>
+
+  <form action="/add" method="post">
+    <input type="text" name="text" />
+    <button type="submit">Přidat ToDo!</button>
+  </form>
+</body>
+
 </html>

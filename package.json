@@ -23,7 +23,8 @@
     "@vscode/sqlite3": "^5.0.8",
     "ejs": "^3.1.6",
     "express": "^4.17.3",
-    "knex": "^1.0.5"
+    "knex": "^1.0.4",
+    "ws": "^8.5.0"
   },
   "devDependencies": {
     "nodemon": "^2.0.15"

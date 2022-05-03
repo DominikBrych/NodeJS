@@ -1,29 +1,33 @@
-<html>
-    <head>
-        <title><%= title %></title>
-    </head>
-    <body>
-        <h1><%= todo.text %></h1>
-        <table>
-            <tr>
-              <th>Hotovo</th>
-              <th>Akce</th>
-            </tr>
-            <tr>
-              <td><%= todo.done ? 'ano' : 'ne' %></td>
-              <td>
-                <% if (todo.done) { %>
-                <a href="/toggle/<%= todo.id %>">Nehotovo</a>
-                <a href="/delete/<%= todo.id %>">Odstranit</a>
-                <% } else { %>
-                <a href="/toggle/<%= todo.id %>">Hotovo</a>
-                <% } %>
-              </td>
-            </tr>
-          </table>
-          <form action="/edit/<%= todo.id %>" method="post">
-            <input value="<%= todo.text %>" type="text" name="text" />
-            <button type="submit">Upravit</button>
-          </form>
-    </body>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title><%= todo.text %></title>
+  </head>
+  <body>
+    <a href="/">Seznam výpis</a>
+
+    <hr />
+
+    <h1><%= todo.text %></h1>
+    <h2><%= todo.done ? 'Hotovo' : 'Nehotovo' %></h2>
+
+    <hr />
+
+    <% if (todo.done) { %>
+    <a href="/toggle/<%= todo.id %>">Nehotovo</a>
+    <a href="/delete/<%= todo.id %>">Odstranit</a>
+    <% } else { %>
+    <a href="/toggle/<%= todo.id %>">Hotovo</a>
+    <% } %>
+
+    <hr />
+
+    <form action="/edit/<%= todo.id %>" method="post">
+      <input type="text" name="text" value="<%= todo.text %>" />
+      <button type="submit">Upravit ToDo!</button>
+    </form>
+  </body>
 </html>

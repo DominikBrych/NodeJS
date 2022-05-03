@@ -1,0 +1,23 @@
+<table>
+  <tr>
+    <th>Text</th>
+    <th>Hotovo</th>
+    <th>Akce</th>
+  </tr>
+
+  <% for (const todo of todos) { %>
+  <tr>
+    <td><%= todo.text %></td>
+    <td><%= todo.done ? 'ano' : 'ne' %></td>
+    <td>
+      <a href="/detail/<%= todo.id %>">Detail</a>
+      <% if (todo.done) { %>
+      <a href="/toggle/<%= todo.id %>">Nehotovo</a>
+      <a href="/delete/<%= todo.id %>">Odstranit</a>
+      <% } else { %>
+      <a href="/toggle/<%= todo.id %>">Hotovo</a>
+      <% } %>
+    </td>
+  </tr>
+  <% } %>
+</table>

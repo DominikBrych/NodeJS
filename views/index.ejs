@@ -9,33 +9,32 @@
   <body>
     <h1><%= title %></h1>
 
-    <table>
-      <tr>
-        <th>Text</th>
-        <th>Hotovo</th>
-        <th>Akce</th>
-      </tr>
+    <a href="/">Vše</a>
+    <a href="?done=true">Hotové</a>
+    <a href="?done=false">Nehotové</a>
 
-      <% for (const todo of todos) { %>
-      <tr>
-        <td><%= todo.text %></td>
-        <td><%= todo.done ? 'ano' : 'ne' %></td>
-        <td>
-          <a href="/detail/<%= todo.id %>">Detail</a>
-          <% if (todo.done) { %>
-          <a href="/toggle/<%= todo.id %>">Nehotovo</a>
-          <a href="/delete/<%= todo.id %>">Odstranit</a>
-          <% } else { %>
-          <a href="/toggle/<%= todo.id %>">Hotovo</a>
-          <% } %>
-        </td>
-      </tr>
-      <% } %>
-    </table>
+    <form action="/" method="get">
+      <input type="text" name="search" />
+      <button type="submit">Vyhledat</button>
+    </form>
+
+    <div id="todos"><%- include('_todos') %></div>
 
     <form action="/add" method="post">
       <input type="text" name="text" />
       <button type="submit">Přidat ToDo!</button>
     </form>
+
+    <script>
+      const ws = new WebSocket('ws://localhost:3000')
+
+      ws.addEventListener('message', (message) => {
+        const json = JSON.parse(message.data)
+
+        if (json.type === 'todos') {
+          document.getElementById('todos').innerHTML = json.html
+        }
+      })
+    </script>
   </body>
 </html>

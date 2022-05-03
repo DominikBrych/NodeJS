@@ -32,7 +32,6 @@
 
     ws.addEventListener('message', (message) => {
       const json = JSON.parse(message.data)
-      console.log(json);
       if (json.type === 'todos') {
         document.getElementById('todos').innerHTML = json.html
       }

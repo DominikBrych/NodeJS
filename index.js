@@ -36,7 +36,7 @@ app.post('/add', async (req, res) => {
   await db('todos').insert({
     text,
   })
-
+  sendTodosToAllConnections();
   res.redirect('/')
 })
 

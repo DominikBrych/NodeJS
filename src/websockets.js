@@ -25,7 +25,7 @@ export const createWebSocketServer = (server) => {
 export const sendTodosToAllConnections = async (id) => {
   for (const connection of connections) {
     let html;
-    //sending update to client on detail page
+    //sending update to clients on related detail page
     if(connection.id && connection.id == id) {
       const todo = await db('todos').select('*').where('id', id).first();
       if(todo) {
@@ -35,7 +35,7 @@ export const sendTodosToAllConnections = async (id) => {
       }
 
     }
-    //send update to client on main page
+    //send update to clients on main page
     else if(!connection.id) {
       const todos = await db('todos').select('*')
       html = await ejs.renderFile('views/_todos.ejs', {

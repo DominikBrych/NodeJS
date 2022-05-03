@@ -49,7 +49,7 @@ app.get('/toggle/:id', async (req, res, next) => {
 
   await db('todos').update({ done: !todo.done }).where('id', id)
 
-  sendTodosToAllConnections()
+  sendTodosToAllConnections(id)
 
   res.redirect('back')
 })
@@ -63,7 +63,7 @@ app.get('/delete/:id', async (req, res, next) => {
 
   await db('todos').delete().where('id', id)
 
-  sendTodosToAllConnections()
+  sendTodosToAllConnections(id)
 
   res.redirect('/')
 })
@@ -90,7 +90,7 @@ app.post('/edit/:id', async (req, res, next) => {
 
   await db('todos').update({ text }).where('id', id)
 
-  sendTodosToAllConnections()
+  sendTodosToAllConnections(id)
 
   res.redirect('back')
 })

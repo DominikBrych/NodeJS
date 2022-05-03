@@ -1,40 +1,43 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title><%= title %></title>
-  </head>
-  <body>
-    <h1><%= title %></h1>
 
-    <a href="/">Vše</a>
-    <a href="?done=true">Hotové</a>
-    <a href="?done=false">Nehotové</a>
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title><%= title %></title>
+</head>
 
-    <form action="/" method="get">
-      <input type="text" name="search" />
-      <button type="submit">Vyhledat</button>
-    </form>
+<body>
+  <h1><%= title %></h1>
 
-    <div id="todos"><%- include('_todos') %></div>
+  <a href="/">Vše</a>
+  <a href="?done=true">Hotové</a>
+  <a href="?done=false">Nehotové</a>
 
-    <form action="/add" method="post">
-      <input type="text" name="text" />
-      <button type="submit">Přidat ToDo!</button>
-    </form>
+  <form action="/" method="get">
+    <input type="text" name="search" />
+    <button type="submit">Vyhledat</button>
+  </form>
 
-    <script>
-      const ws = new WebSocket('ws://localhost:3000')
+  <div id="todos"><%- include('_todos') %></div>
 
-      ws.addEventListener('message', (message) => {
-        const json = JSON.parse(message.data)
+  <form action="/add" method="post">
+    <input type="text" name="text" />
+    <button type="submit">Přidat ToDo!</button>
+  </form>
 
-        if (json.type === 'todos') {
-          document.getElementById('todos').innerHTML = json.html
-        }
-      })
-    </script>
-  </body>
+  <script>
+    const ws = new WebSocket('ws://localhost:3000')
+
+    ws.addEventListener('message', (message) => {
+      const json = JSON.parse(message.data)
+      console.log(json);
+      if (json.type === 'todos') {
+        document.getElementById('todos').innerHTML = json.html
+      }
+    })
+  </script>
+</body>
+
 </html>

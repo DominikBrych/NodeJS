@@ -8,7 +8,8 @@ const connections = new Set()
 export const createWebSocketServer = (server) => {
   const wss = new WebSocketServer({ server })
 
-  wss.on('connection', (ws) => {
+  wss.on('connection', (ws, req) => {
+    ws.id = req.url.split('id=')[1]
     connections.add(ws)
 
     console.log('New connection', connections.size)
@@ -21,16 +22,31 @@ export const createWebSocketServer = (server) => {
   })
 }
 
-export const sendTodosToAllConnections = async () => {
-  const todos = await db('todos').select('*')
-
-  const html = await ejs.renderFile('views/_todos.ejs', {
-    todos,
-  })
-
+export const sendTodosToAllConnections = async (id) => {
   for (const connection of connections) {
+    let html;
+    //sending update to client on detail page
+    if(connection.id && connection.id == id) {
+      const todo = await db('todos').select('*').where('id', id).first();
+      if(todo) {
+        html = await ejs.renderFile('views/detail.ejs', {
+          todo,
+        });
+      }
+
+    }
+    //send update to client on main page
+    else if(!connection.id) {
+      const todos = await db('todos').select('*')
+      html = await ejs.renderFile('views/_todos.ejs', {
+        todos,
+      });
+    }
+    else {
+      return;
+    }
     const message = {
-      type: 'todos',
+      type: !connection.id ? 'todos' : 'todo',
       html,
     }
 
